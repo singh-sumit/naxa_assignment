@@ -1,0 +1,1 @@
+# Starting writing python migrating cmd
