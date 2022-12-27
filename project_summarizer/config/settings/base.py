@@ -39,9 +39,12 @@ DJANGO_APPS= [
     'django.contrib.staticfiles',
 ]
 
-USER_DEFINED_APPS = []
+USER_DEFINED_APPS = [
+    'project_summarizer.projects',
+]
 THIRD_PARTY_APPS = [
     'rest_framework',
+    'drf_spectacular',
 ]
 
 INSTALLED_APPS = DJANGO_APPS + USER_DEFINED_APPS + THIRD_PARTY_APPS
@@ -132,3 +135,15 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+REST_FRAMEWORK={
+    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
+
+}
+
+SPECTACULAR_SETTINGS={
+    'TITLE': 'Project Budget Summarizer API',
+    'DESCRIPTION': 'Project Budget Summarizer description',
+    'VERSION': '1.0.0',
+    'SERVE_INCLUDE_SCHEMA': False,
+}
