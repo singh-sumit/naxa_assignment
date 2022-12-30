@@ -1,0 +1,208 @@
+{
+	"info": {
+		"_postman_id": "f9baa262-c539-4246-8b5a-96300d049ad5",
+		"name": "Naxa Assignment",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Upload Project from xlsx to db",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "file",
+							"type": "file",
+							"src": "/C:/Users/Admin/Downloads/Projects Database.xlsx"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8000/api/v1/projects/upload-project/",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"v1",
+						"projects",
+						"upload-project",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "List Project with filters",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:8000/api/v1/projects/?sector_name=Health&ministry=Ministry of Finance&project_status=On-Going&project_status=Completed&agreement_date=2018-05-21&date_of_effectiveness=2018-01-01",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"v1",
+						"projects",
+						""
+					],
+					"query": [
+						{
+							"key": "sector_name",
+							"value": "Health"
+						},
+						{
+							"key": "ministry",
+							"value": "Ministry of Finance"
+						},
+						{
+							"key": "project_status",
+							"value": "On-Going"
+						},
+						{
+							"key": "project_status",
+							"value": "Completed"
+						},
+						{
+							"key": "agreement_date",
+							"value": "2018-05-21"
+						},
+						{
+							"key": "date_of_effectiveness",
+							"value": "2018-01-01"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Summarize Project with filters",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:8000/api/v1/projects/project-summary/?sector_name=Health&sector_name=Others - Social&ministry=Ministry of Finance&date_of_effectiveness=2018-01-01",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"v1",
+						"projects",
+						"project-summary",
+						""
+					],
+					"query": [
+						{
+							"key": "sector_name",
+							"value": "Health"
+						},
+						{
+							"key": "sector_name",
+							"value": "Others - Social"
+						},
+						{
+							"key": "ministry",
+							"value": "Ministry of Finance"
+						},
+						{
+							"key": "project_status",
+							"value": "On-Going",
+							"disabled": true
+						},
+						{
+							"key": "project_status",
+							"value": "Completed",
+							"disabled": true
+						},
+						{
+							"key": "agreement_date",
+							"value": "2018-05-21",
+							"disabled": true
+						},
+						{
+							"key": "date_of_effectiveness",
+							"value": "2018-01-01"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Summarize Project by location municipality district",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:8000/api/v1/projects/summary-by-location/?district=Humla (Simikot)&district=Dailekh (Dullu)&district=Dolpa (Dolpa)&district=Jajarkot (Khalanga)&district=Salyan (Salyan Khalanga)",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"v1",
+						"projects",
+						"summary-by-location",
+						""
+					],
+					"query": [
+						{
+							"key": "district",
+							"value": "Humla (Simikot)"
+						},
+						{
+							"key": "district",
+							"value": "Dailekh (Dullu)"
+						},
+						{
+							"key": "district",
+							"value": "Dolpa (Dolpa)"
+						},
+						{
+							"key": "district",
+							"value": "Jajarkot (Khalanga)"
+						},
+						{
+							"key": "district",
+							"value": "Salyan (Salyan Khalanga)"
+						},
+						{
+							"key": "municipality",
+							"value": "Simikot",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

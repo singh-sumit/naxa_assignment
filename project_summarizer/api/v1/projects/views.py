@@ -18,13 +18,8 @@ class ProjectViewSet(GenericViewSet, ListModelMixin):
     queryset = Project.objects.all()
 
     def get_queryset(self):
-        # sector_name = self.request.query_params.get('sector_name')
-        # ministry_name = self.request.query_params.get('ministry')
-        # project_status = self.request.query_params.get('project_status')
 
         filter_conditions = queryparams_to_Q(params_qs=self.request.query_params)
-        # print(filter_conditions, type(filter_conditions))
-        print("self action", self.action)
 
         if self.action in ['list', 'project_summary'] and filter_conditions:
             queryset = Project.objects.filter(

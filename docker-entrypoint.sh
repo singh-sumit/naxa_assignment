@@ -1,1 +1,5 @@
-# Starting writing python migrating cmd
+#!/bin/sh
+
+python manage.py migrate
+
+exec "$@"
