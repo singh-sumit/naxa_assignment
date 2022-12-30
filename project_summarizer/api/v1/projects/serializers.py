@@ -82,13 +82,6 @@ class SectorWiseSummarySerializer(serializers.ModelSerializer):
             'budget'
         )
 
-    # def to_representation(self, instance):
-    #     representation = super().to_representation(instance)
-    #     representation['projects_count'] = len(instance.project_set.all())
-    #     representation.update(instance.project_set.aggregate(budget=Sum('commitments')))
-    #
-    #     return representation
-
     def get_projects_count(self, instance):
         return len(instance.project_set.all())
 
