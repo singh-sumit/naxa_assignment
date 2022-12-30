@@ -1,9 +1,11 @@
 from django.db.models import Q
 
 params_to_model_field = {'sector_name': 'sector__name__icontains', 'ministry': 'counterpart_ministry__name__icontains',
-                         'project_status': 'status__iexact',
-                         'agreement_date': 'agreement_date__exact',
-                         'date_of_effectiveness': 'date_of_effectiveness__exact'}
+                         'project_status': 'status__iexact', 'agreement_date': 'agreement_date__exact',
+                         'date_of_effectiveness': 'date_of_effectiveness__exact',
+                         'municipality': 'municipality__icontains', 'district': 'district__icontains',
+                         'province': 'province__icontains'
+                         }
 
 
 def queryparams_to_Q(params_qs, *args, **kwargs):
@@ -17,9 +19,3 @@ def queryparams_to_Q(params_qs, *args, **kwargs):
                 conditions |= Q((params_to_model_field[params_key], val))
 
     return conditions
-
-# qsconditons = Q()
-# qsconditons &= Q(sector__name__icontains=sector_name)
-# qsconditons &= Q(counterpart_ministry__name__icontains=ministry_name)
-# qsconditons &= Q(Q(status__iexact='On-Going') | Q(status__iexact='On-Going'))
-# qsconditons

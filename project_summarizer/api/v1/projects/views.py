@@ -7,10 +7,10 @@ from rest_framework.response import Response
 from rest_framework.viewsets import GenericViewSet
 
 from project_summarizer.api.v1.projects.serializers import FileImportSerializer, ProjectSerializer, \
-    ProjectFilterSerializer, SectorSerializer, SectorWiseSummarySerializer
+    ProjectFilterSerializer, SectorWiseSummarySerializer, AddressWiseProjectSummary
 from project_summarizer.config.core.utils.query_params import queryparams_to_Q
 from project_summarizer.config.core.utils.read_write_files import process_uploaded_file
-from project_summarizer.projects.models import Project, Sector
+from project_summarizer.projects.models import Project, Sector, Address
 
 
 class ProjectViewSet(GenericViewSet, ListModelMixin):
@@ -23,19 +23,19 @@ class ProjectViewSet(GenericViewSet, ListModelMixin):
         # project_status = self.request.query_params.get('project_status')
 
         filter_conditions = queryparams_to_Q(params_qs=self.request.query_params)
-        print(filter_conditions, type(filter_conditions))
+        # print(filter_conditions, type(filter_conditions))
+        print("self action", self.action)
 
         if self.action in ['list', 'project_summary'] and filter_conditions:
             queryset = Project.objects.filter(
                 filter_conditions
             ).all()
             return queryset
+        elif self.action in ['project_summary_by_location']:
+            return Address.objects.filter(
+                filter_conditions
+            ).all()
         return super().get_queryset()
-
-    # def get_serializer(self, *args, **kwargs):
-    #     if self.action == 'list':
-    #         return ProjectFilterSerializer
-    #     return super().get_serializer(*args, **kwargs)
 
     @extend_schema(request=FileImportSerializer)
     @action(detail=False, url_path='upload-project', name='Import Project', methods=['POST'])
@@ -95,3 +95,28 @@ class ProjectViewSet(GenericViewSet, ListModelMixin):
             Sector.objects.filter(code__in=list(queryset.values_list('sector__code', flat=True).distinct())), many=True)
         data['sectors'] = serializer.data
         return Response(data)
+
+    @extend_schema(
+        parameters=[
+            OpenApiParameter(
+                name='municipality',
+                description='Name of municipality',
+            ),
+            OpenApiParameter(
+                name='district',
+                description='Name of district',
+            ),
+            OpenApiParameter(
+                name='province',
+                description='Name of province',
+            ),
+        ],
+        responses={
+            200: AddressWiseProjectSummary
+        }
+    )
+    @action(detail=False, url_path='summary-by-location', name='Project summary by location', methods=['GET'])
+    def project_summary_by_location(self, request, *args, **kwargs):
+        queryset = self.filter_queryset(self.get_queryset())
+        serializer = AddressWiseProjectSummary(queryset, many=True)
+        return Response(serializer.data)

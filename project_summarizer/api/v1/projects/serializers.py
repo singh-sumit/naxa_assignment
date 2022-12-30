@@ -94,3 +94,27 @@ class SectorWiseSummarySerializer(serializers.ModelSerializer):
 
     def get_budget(self, instance):
         return instance.project_set.aggregate(budget=Sum('commitments')).get('budget')
+
+
+class AddressWiseProjectSummary(serializers.ModelSerializer):
+    count = serializers.SerializerMethodField()
+    budget = serializers.SerializerMethodField()
+    name = serializers.SerializerMethodField()
+
+    class Meta:
+        model = Address
+        fields = (
+            'id',
+            'name',
+            'count',
+            'budget',
+        )
+
+    def get_name(self, instance):
+        return instance.municipality
+
+    def get_count(self, instance):
+        return instance.project_set.count()
+
+    def get_budget(self, instance):
+        return instance.project_set.aggregate(budget=Sum('commitments')).get('budget')
